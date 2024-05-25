@@ -1,16 +1,19 @@
-using App.Runtime.Architecture.AppInputSystem;
+using App.AppInputSystem;
+using App.SceneLoaderSystem;
 using Cysharp.Threading.Tasks;
 using VContainer;
 using VContainer.Unity;
 
-namespace App.Runtime.Architecture.Scopes
+namespace App.Scopes
 {
     public sealed class RootScope : LifetimeScope
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<AppInput>(Lifetime.Singleton)
-                .As<IAppInput>();
+            builder.Register<WorldInput>(Lifetime.Singleton)
+                .As<IWorldInput>();
+            builder.Register<PuzzleInput>(Lifetime.Singleton)
+                .As<IPuzzleInput>();
 
             SceneLoader loadSceneController = new(this);
             builder.RegisterInstance(loadSceneController)
@@ -21,8 +24,8 @@ namespace App.Runtime.Architecture.Scopes
 
         private void OnRegistrationEnded(IObjectResolver resolver)
         {
-            IAppInput appInput = resolver.Resolve<IAppInput>();
-            appInput.IsEnable = true;
+            IWorldInput worldInput = resolver.Resolve<IWorldInput>();
+            worldInput.IsEnable = true;
 
             SceneLoader loadSceneController = resolver.Resolve<SceneLoader>();
             loadSceneController.Load(SceneIndexes.MAIN_MENU_SCENE)

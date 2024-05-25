@@ -1,6 +1,6 @@
 ﻿using Unity.VisualScripting;
 
-namespace App.Runtime.Content
+namespace App.SimplesScipts
 {
     public interface IEntity
     {

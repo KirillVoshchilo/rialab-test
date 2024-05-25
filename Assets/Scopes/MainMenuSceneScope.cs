@@ -1,9 +1,9 @@
-using App.Runtime.Content.UI;
+using App.MainMenu;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace App.Runtime.Architecture.Scopes
+namespace App.Scopes
 {
     public sealed class MainMenuSceneScope : Scope
     {

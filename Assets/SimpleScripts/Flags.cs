@@ -1,8 +1,7 @@
-﻿using App.Runtime.Architecture;
-using System;
+﻿using System;
 using UnityEngine;
 
-namespace App.Runtime.Content
+namespace App.SimplesScipts
 {
     [Serializable]
     public sealed class Flags

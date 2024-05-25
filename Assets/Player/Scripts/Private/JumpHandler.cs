@@ -1,10 +1,10 @@
-﻿using App.Runtime.Architecture.AppInputSystem;
+﻿using App.AppInputSystem;
 
-namespace App.Runtime.Content.Player.Private
+namespace App.Player.Private
 {
     public sealed class JumpHandler
     {
-        private readonly PlayerData _data;
+        private readonly Data _data;
         private bool _isEnable;
 
         public bool IsEnable
@@ -16,7 +16,7 @@ namespace App.Runtime.Content.Player.Private
                     return;
 
                 _isEnable = value;
-                IAppInput appInput = _data.AppInput;
+                IWorldInput appInput = _data.AppInput;
 
                 if (value)
                 {
@@ -29,7 +29,7 @@ namespace App.Runtime.Content.Player.Private
             }
         }
 
-        public JumpHandler(PlayerData data)
+        public JumpHandler(Data data)
         {
             _data = data;
         }

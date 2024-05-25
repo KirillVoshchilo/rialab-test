@@ -1,14 +1,13 @@
-﻿using App.Runtime.Architecture.AppInputSystem;
-using App.Runtime.Content.Player.Private;
+﻿using App.AppInputSystem;
 using UnityEngine;
 
-namespace App.Runtime.Content.Player
+namespace App.Player.Private
 {
     public sealed class GravityHandler
     {
         private const float DELAY = 0.2f;
 
-        private readonly PlayerData _data;
+        private readonly Data _data;
         private float _timer;
         private bool _isEnable;
 
@@ -21,7 +20,7 @@ namespace App.Runtime.Content.Player
                     return;
 
                 _isEnable = value;
-                IAppInput appInput = _data.AppInput;
+                IWorldInput appInput = _data.AppInput;
 
                 if (value)
                 {
@@ -34,7 +33,7 @@ namespace App.Runtime.Content.Player
             }
         }
 
-        public GravityHandler(PlayerData data)
+        public GravityHandler(Data data)
         {
             _data = data;
         }

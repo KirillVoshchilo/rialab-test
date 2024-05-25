@@ -1,4 +1,4 @@
-﻿namespace App.Runtime.Architecture
+﻿namespace App.SimplesScipts
 {
     public enum EFlags
     {

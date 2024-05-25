@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-namespace App.Runtime.Simples
+namespace App.SimplesScipts
 {
     public sealed class SEvent : ISEvent
     {

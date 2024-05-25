@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using VContainer;
-using App.Runtime.Content.Player;
 using VContainer.Unity;
+using App.Player;
+using App.CyclesSystem;
+using App.Puzzles;
 
-namespace App.Runtime.Architecture.Scopes
+namespace App.Scopes
 {
     public sealed class LevelScope : Scope
     {
@@ -13,8 +15,9 @@ namespace App.Runtime.Architecture.Scopes
         public override void Build(IContainerBuilder builder)
         {
             builder.RegisterComponent(_playerEntity);
-
             builder.RegisterComponent(_unityCycles);
+
+            builder.Register<PuzzlesWins>(Lifetime.Singleton);
 
         }
         public override void Resolve(IObjectResolver container)
@@ -28,6 +31,9 @@ namespace App.Runtime.Architecture.Scopes
         private void StartLevel()
         {
             _playerEntity.IsEnable = true;
+         
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

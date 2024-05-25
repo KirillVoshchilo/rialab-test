@@ -1,10 +1,10 @@
-using App.Runtime.Simples;
+using App.SimplesScipts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace App.Runtime.Architecture.AppInputSystem
+namespace App.AppInputSystem
 {
-    public sealed class AppInput : MainInputActions.IGameActions, IAppInput
+    public sealed class WorldInput : MainInputActions.IWorldActions, IWorldInput
     {
         private readonly MainInputActions _interactions;
         private readonly SEvent<bool> _onMoving = new();
@@ -32,18 +32,21 @@ namespace App.Runtime.Architecture.AppInputSystem
                 if (value == _isEnable)
                     return;
 
+                Debug.Log($"World {value}");
+
                 _isEnable = value;
 
                 if (value)
-                    _interactions.Game.Enable();
-                else _interactions.Game.Disable();
+                    _interactions.World.Enable();
+                else _interactions.World.Disable();
             }
         }
+        public SEvent OnInteractionPressed => _onInteractionPressed;
 
-        public AppInput()
+        public WorldInput()
         {
             _interactions = new MainInputActions();
-            _interactions.Game.SetCallbacks(this);
+            _interactions.World.SetCallbacks(this);
         }
 
         #region Input Reactions
@@ -100,7 +103,7 @@ namespace App.Runtime.Architecture.AppInputSystem
         #endregion
     }
 
-    public interface IAppInput
+    public interface IWorldInput
     {
         Vector2 MoveDirection { get; }
         Vector2 LookDirection { get; }
@@ -110,5 +113,6 @@ namespace App.Runtime.Architecture.AppInputSystem
         SEvent<bool> OnMoving { get; }
         SEvent OnJumpPressed { get; }
         SEvent<bool> OnLooking { get; }
+        SEvent OnInteractionPressed { get; }
     }
 }

@@ -1,10 +1,10 @@
-using App.Runtime.Architecture.Scopes;
+using App.Scopes;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
-namespace App.Runtime.Architecture
+namespace App.SceneLoaderSystem
 {
     public sealed class SceneLoader
     {

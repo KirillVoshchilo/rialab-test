@@ -1,5 +1,5 @@
 using UnityEngine;
-namespace App.Runtime.Simples
+namespace App.SimplesScipts
 {
     public static class SGeometryOperations
     {

@@ -1,17 +1,22 @@
-﻿using App.Runtime.Architecture;
-using App.Runtime.Architecture.AppInputSystem;
+﻿using App.AppInputSystem;
+using App.Components;
+using App.CyclesSystem;
+using App.Puzzles;
+using App.SimplesScipts;
 using Cinemachine;
 using System;
 using UnityEngine;
 
-namespace App.Runtime.Content.Player.Private
+namespace App.Player.Private
 {
     [Serializable]
-    public sealed class PlayerData
+    public sealed class Data
     {
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
         [SerializeField] private Flags _flags;
+        [SerializeField] private RectTransform _aim;
+        [SerializeField] private SCUIHighlighter _aimHighlighter;
 
         [Header("Control Settings")]
         [SerializeField] private float _mouseHorizontalSensitivity = 100.0f;
@@ -19,11 +24,11 @@ namespace App.Runtime.Content.Player.Private
         [SerializeField] private float _playerSpeed = 5.0f;
         [SerializeField] private float _jumpSpeed = 5.0f;
 
-        private IAppInput _appInput;
+        private IWorldInput _appInput;
         private UnityCycles _unityCycles;
         private PlayerEntity _playerEntity;
+        private Camera _mainCamera;
         private float _verticalSpeed = 0.0f;
-        private bool _isEnable = false;
         private float _verticalAngle;
         private float _horizontalAngle;
         private bool _isGrounded;
@@ -37,17 +42,6 @@ namespace App.Runtime.Content.Player.Private
         public float JumpSpeed => _jumpSpeed;
 
         public float VerticalSpeed { get => _verticalSpeed; set => _verticalSpeed = value; }
-        public bool IsEnable
-        {
-            get => _isEnable;
-            set
-            {
-                if (value == _isEnable)
-                    return;
-
-                _isEnable = value;
-            }
-        }
         public float VerticalAngle { get => _verticalAngle; set => _verticalAngle = value; }
         public float HorizontalAngle { get => _horizontalAngle; set => _horizontalAngle = value; }
         public float Speed { get => _speed; set => _speed = value; }
@@ -55,8 +49,13 @@ namespace App.Runtime.Content.Player.Private
         public UnityCycles UnityCycles { get => _unityCycles; set => _unityCycles = value; }
         public Vector3 HorizontalVelocity { get => _horizontalVelocity; set => _horizontalVelocity = value; }
         public PlayerEntity PlayerEntity { get => _playerEntity; set => _playerEntity = value; }
-        public IAppInput AppInput { get => _appInput; set => _appInput = value; }
+        public IWorldInput AppInput { get => _appInput; set => _appInput = value; }
         public float MouseHorizontalSensitivity => _mouseHorizontalSensitivity;
         public Flags Flags => _flags;
+
+        public RectTransform Aim => _aim;
+        public SCUIHighlighter AimHighlighter => _aimHighlighter;
+
+        public Camera MainCamera { get => _mainCamera; set => _mainCamera = value; }
     }
 }

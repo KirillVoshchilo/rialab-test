@@ -1,10 +1,11 @@
-using App.Runtime.Architecture;
+using App.SceneLoaderSystem;
 using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
-namespace App.Runtime.Content.UI
+
+namespace App.MainMenu
 {
     public class MainMenuUI : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using VContainer;
 using System.Collections.Generic;
 using System;
 
-namespace App.Runtime.Architecture.Scopes
+namespace App.Scopes
 {
     public abstract class Scope : MonoBehaviour
     {

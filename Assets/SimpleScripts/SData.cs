@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace App.Runtime.Simples
+namespace App.SimplesScipts
 {
     [Serializable]
     public struct SData<T1, T2>

@@ -1,12 +1,12 @@
-﻿using App.Runtime.Architecture.AppInputSystem;
+﻿using App.AppInputSystem;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace App.Runtime.Content.Player.Private
+namespace App.Player.Private
 {
     public sealed class WalkHandler
     {
-        private readonly PlayerData _data;
+        private readonly Data _data;
 
         private bool _alreadyMoving;
         private bool _isEnable;
@@ -32,7 +32,7 @@ namespace App.Runtime.Content.Player.Private
             }
         }
 
-        public WalkHandler(PlayerData data)
+        public WalkHandler(Data data)
         {
             _data = data;
         }
@@ -48,7 +48,7 @@ namespace App.Runtime.Content.Player.Private
         }
         private async UniTask MoveProcess()
         {
-            IAppInput appInput = _data.AppInput;
+            IWorldInput appInput = _data.AppInput;
 
             while (_isEnable && _data.AppInput.IsMoving)
             {

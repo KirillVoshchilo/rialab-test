@@ -1,4 +1,4 @@
-﻿namespace App.Runtime.Architecture
+﻿namespace App.SceneLoaderSystem
 {
     public static class SceneIndexes
     {

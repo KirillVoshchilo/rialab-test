@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace App.Runtime.Content.Player.Private
+namespace App.Player.Private
 {
     public sealed class LookHandler
     {
-        private readonly PlayerData _data;
+        private readonly Data _data;
         private bool _isEnable;
 
         public bool IsEnable
@@ -28,7 +28,7 @@ namespace App.Runtime.Content.Player.Private
             }
         }
 
-        public LookHandler(PlayerData data)
+        public LookHandler(Data data)
         {
             _data = data;
         }
