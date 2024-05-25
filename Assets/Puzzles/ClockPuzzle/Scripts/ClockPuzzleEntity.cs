@@ -24,7 +24,17 @@ namespace App.Puzzles.ClockPuzzle
             _data.PuzzleWins = puzzlesWins;
             _data.MainCamera = Camera.main;
 
+            _data.Hours = Random.Range(0, 24);
+            _data.Minutes = Random.Range(0, 60);
+
             _data.TimerField.text = $"{_data.Hours}:{_data.Minutes}";
+        }
+        public T Get<T>() where T : class
+        {
+            if (typeof(T) == typeof(InteractionObject))
+                return _data.InteractionObject as T;
+
+            return null;
         }
 
         private void InteractiWithPuzzle()
@@ -77,7 +87,6 @@ namespace App.Puzzles.ClockPuzzle
 
             return mGood && hGood;
         }
-
         private void StartMoving(bool obj)
         {
             if (!obj)
@@ -106,7 +115,6 @@ namespace App.Puzzles.ClockPuzzle
                     .Forget();
             }
         }
-
         private async UniTask MovingArrowProcess()
         {
             Transform rotationObject = _data.GrabbedArrow.transform.parent.transform;
@@ -118,19 +126,18 @@ namespace App.Puzzles.ClockPuzzle
                 Vector2 screenDirection = pointerPosition - screenRotationCenter;
                 Vector3 direction = new(0, screenDirection.y, screenDirection.x);
                 rotationObject.rotation = Quaternion.LookRotation(direction, rotationObject.up);
-                
+
                 if (CheckForWin())
                 {
                     _data.IsWinned = true;
                     _data.PuzzleWins.WinsCount += 1;
                     FinishPuzzle();
                 }
-               
+
                 await UniTask.NextFrame();
             }
             _data.GrabbedArrow = null;
         }
-
         private void FinishPuzzle()
         {
             _isEnable = false;
@@ -142,16 +149,6 @@ namespace App.Puzzles.ClockPuzzle
             _data.PuzzleInput.IsEnable = false;
             _data.WorldInput.IsEnable = true;
             _data.IsWinned = true;
-            _data.PuzzleWins.WinsCount += 1;
-        }
-
-        public T Get<T>() where T : class
-        {
-            if (typeof(T) == typeof(InteractionObject))
-                return _data.InteractionObject as T;
-
-
-            return null;
         }
     }
 }

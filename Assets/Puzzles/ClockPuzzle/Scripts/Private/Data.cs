@@ -15,10 +15,8 @@ namespace App.Puzzles.ClockPuzzle.Private
         [SerializeField] private CinemachineVirtualCamera _virtualCamera;
         [SerializeField] private Transform _rotationCenter;
 
-        [Range(0, 24)]
-        [SerializeField] private int _hours;
-        [Range(0, 60)]
-        [SerializeField] private int _minutes;
+        private int _hours;
+        private int _minutes;
 
         private InteractionObject _interactionObject;
         private GameObject _grabbedArrow;
@@ -28,15 +26,9 @@ namespace App.Puzzles.ClockPuzzle.Private
         private bool _isWinned;
         private Camera _mainCamera;
 
-        public float HoursAngle => _hours * 360 / 24;
-        public float MinutesAngle => _minutes * 360 / 60;
-
         public GameObject ShortArrow => _shortArrow;
         public GameObject LongArrow => _longArrow;
         public TextMeshProUGUI TimerField => _timerField;
-
-        public int Hours => _hours;
-        public int Minutes => _minutes;
 
         public InteractionObject InteractionObject { get => _interactionObject; set => _interactionObject = value; }
         public CinemachineVirtualCamera VirtualCamera { get => _virtualCamera; set => _virtualCamera = value; }
@@ -47,5 +39,7 @@ namespace App.Puzzles.ClockPuzzle.Private
         public Camera MainCamera { get => _mainCamera; set => _mainCamera = value; }
         public GameObject GrabbedArrow { get => _grabbedArrow; set => _grabbedArrow = value; }
         public Transform RotationCenter => _rotationCenter;
+        public int Hours { get => _hours; set => _hours = value; }
+        public int Minutes { get => _minutes; set => _minutes = value; }
     }
 }

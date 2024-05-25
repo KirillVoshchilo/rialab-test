@@ -54,6 +54,8 @@ namespace App.Player.Private
 
             _canInteract = CheckForInteractableObject(out InteractionObject interactionObject);
 
+            Debug.Log(_canInteract);
+
             if (_canInteract)
                 _data.AimHighlighter.Highlight();
             else
@@ -66,8 +68,7 @@ namespace App.Player.Private
         {
             interactionObject = null;
 
-            Vector3 originPoint = _data.MainCamera.ViewportToWorldPoint(_data.Aim.position);
-            Ray ray = new(originPoint, _data.MainCamera.transform.forward);
+            Ray ray = _data.MainCamera.ScreenPointToRay(_data.Aim.position);
 
             if (!Physics.Raycast(ray, out RaycastHit hit, 2))
                 return false;

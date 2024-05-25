@@ -32,8 +32,6 @@ namespace App.AppInputSystem
                 if (value == _isEnable)
                     return;
 
-                Debug.Log($"World {value}");
-
                 _isEnable = value;
 
                 if (value)
