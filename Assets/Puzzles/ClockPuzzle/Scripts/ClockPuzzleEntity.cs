@@ -62,7 +62,7 @@ namespace App.Puzzles.ClockPuzzle
             _data.Hours = Random.Range(0, 24);
             _data.Minutes = Random.Range(0, 60);
 
-            _data.TimerField.text = $"{_data.Hours}:{_data.Minutes}";
+            _data.TimerField.text = $"{_data.Hours:00}:{_data.Minutes:00}";
 
             if (_data.IsWinned)
             {
@@ -104,7 +104,6 @@ namespace App.Puzzles.ClockPuzzle
 
             return isMinutesCorrect && isHoursCorrect;
         }
-
         private void TryGrab(bool obj)
         {
             if (!obj)

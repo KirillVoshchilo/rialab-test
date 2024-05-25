@@ -33,7 +33,6 @@ namespace App.AppInputSystem
                 }
             }
         }
-
         public bool IsPressed => _isPressed;
         public ISEvent<bool> OnClicked => _onClicked;
         public Vector2 PointerPosition => _pointerPosition;
@@ -63,11 +62,13 @@ namespace App.AppInputSystem
                 _isPressed = !_isPressed;
                 _onClicked.Invoke(true);
             }
+
             if (context.phase == InputActionPhase.Canceled)
             {
                 _isPressed = false;
                 _onClicked.Invoke(false);
             }
+
             if (context.phase == InputActionPhase.Disabled)
             {
                 _isPressed = false;

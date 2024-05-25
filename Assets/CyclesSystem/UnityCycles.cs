@@ -9,17 +9,12 @@ namespace App.CyclesSystem
         private readonly SEvent _updateCycle = new();
 
         private void Update()
-        {
-            _updateCycle.Invoke();
-        }
+            => _updateCycle.Invoke();
 
         public void AddUpdate(Action action)
-        {
-            _updateCycle.AddListener(action);
-        }
+            => _updateCycle.AddListener(action);
+
         public void RemoveUpdate(Action action)
-        {
-            _updateCycle.RemoveListener(action);
-        }
+            => _updateCycle.RemoveListener(action);
     }
 }

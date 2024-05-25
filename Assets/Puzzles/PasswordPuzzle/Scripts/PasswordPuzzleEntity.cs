@@ -30,8 +30,9 @@ namespace App.Puzzles.PasswordPuzzle
 
             return null;
         }
+       
         [Button("Reset", ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
-        public void ResetValues()
+        private void ResetValues()
         {
             if (_data.PuzzleWins == null)
                 return;
@@ -47,8 +48,6 @@ namespace App.Puzzles.PasswordPuzzle
                 _data.PuzzleWins.WinsCount -= 1;
             }
         }
-
-
         private void InteractiWithPuzzle()
         {
             if (_data.IsWinned)

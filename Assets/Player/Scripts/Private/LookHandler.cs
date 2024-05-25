@@ -18,20 +18,14 @@ namespace App.Player.Private
                 _isEnable = value;
 
                 if (value)
-                {
                     _data.AppInput.OnLooking.AddListener(OnLooking);
-                }
                 else
-                {
                     _data.AppInput.OnLooking.RemoveListener(OnLooking);
-                }
             }
         }
 
-        public LookHandler(Data data)
-        {
-            _data = data;
-        }
+        public LookHandler(Data data) 
+            => _data = data;
 
         private void OnLooking(bool obj)
         {

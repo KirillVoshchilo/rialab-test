@@ -20,21 +20,15 @@ namespace App.Player.Private
                 IWorldInput appInput = _data.AppInput;
 
                 if (value)
-                {
                     _data.UnityCycles.AddUpdate(UpdateCycle);
-                }
                 else
-                {
                     _data.UnityCycles.RemoveUpdate(UpdateCycle);
-                }
             }
         }
 
 
-        public CrosshairHandler(Data data)
-        {
-            _data = data;
-        }
+        public CrosshairHandler(Data data) 
+            => _data = data;
 
         private void UpdateCycle()
         {
@@ -46,9 +40,7 @@ namespace App.Player.Private
             _isCrosshairVisible = isInputEnable;
 
             if (isInputEnable)
-            {
                 _data.Aim.gameObject.SetActive(true);
-            }
             else
             {
                 _data.AimHighlighter.SetActive(false);

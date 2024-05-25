@@ -23,27 +23,21 @@ namespace App.Player.Private
                 IWorldInput appInput = _data.AppInput;
 
                 if (value)
-                {
                     _data.UnityCycles.AddUpdate(UpdateCycle);
-                }
                 else
-                {
                     _data.UnityCycles.RemoveUpdate(UpdateCycle);
-                }
             }
         }
 
-        public GravityHandler(Data data)
-        {
-            _data = data;
-        }
+        public GravityHandler(Data data) 
+            => _data = data;
 
         private void UpdateCycle()
         {
             _data.VerticalSpeed -= 10.0f * Time.deltaTime;
 
             if (_data.VerticalSpeed < -10.0f)
-                _data.VerticalSpeed = -10.0f; // max fall speed
+                _data.VerticalSpeed = -10.0f;
 
             Vector3 verticalMove = new(0, _data.VerticalSpeed * Time.deltaTime, 0);
             CollisionFlags flag = _data.CharacterController.Move(verticalMove);
@@ -57,6 +51,7 @@ namespace App.Player.Private
             else
             {
                 _timer += Time.deltaTime;
+
                 if (_timer > DELAY)
                     _data.IsGrounded = false;
             }

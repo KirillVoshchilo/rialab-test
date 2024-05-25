@@ -27,8 +27,8 @@ namespace App.Player.Private
         private float _verticalSpeed = 0.0f;
         private float _verticalAngle;
         private float _horizontalAngle;
-        private bool _isGrounded;
         private float _speed = 0f;
+        private bool _isGrounded;
         private Vector3 _horizontalVelocity;
 
         public CharacterController CharacterController => _characterController;

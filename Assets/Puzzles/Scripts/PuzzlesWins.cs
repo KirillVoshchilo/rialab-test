@@ -1,12 +1,12 @@
-﻿
-using App.SimplesScipts;
+﻿using App.SimplesScipts;
 
 namespace App.Puzzles
 {
-    public class PuzzlesWins
+    public sealed class PuzzlesWins
     {
+        private readonly SEvent<int> _onWinsCountChanged = new();
+        
         private int _winsCount;
-        private SEvent<int> _onWinsCountChanged = new();
 
         public int WinsCount
         {
@@ -20,6 +20,6 @@ namespace App.Puzzles
                 _onWinsCountChanged.Invoke(value);
             }
         }
-        public SEvent<int> OnWinsCountChanged => _onWinsCountChanged;
+        public ISEvent<int> OnWinsCountChanged => _onWinsCountChanged;
     }
 }

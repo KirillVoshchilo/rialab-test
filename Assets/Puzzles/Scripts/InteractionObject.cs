@@ -1,4 +1,3 @@
-using App.SimplesScipts;
 using System;
 
 namespace App.Puzzles
@@ -11,8 +10,6 @@ namespace App.Puzzles
             => _action = interaction;
 
         public void Interact()
-        {
-            _action.Invoke();
-        }
+            => _action.Invoke();
     }
 }

@@ -17,15 +17,16 @@ namespace App.Puzzles.PlatesPuzzle.Private
         private IWorldInput _worldInput;
         private PuzzlesWins _puzzlesWins;
         private IPuzzleInput _puzzleInput;
-        private bool _isWinned;
         private Camera _mainCamera;
+        private bool _isWinned;
 
+        public bool IsWinned { get => _isWinned; set => _isWinned = value; }
+       
         public InteractionObject InteractionObject { get => _interactionObject; set => _interactionObject = value; }
         public CinemachineVirtualCamera VirtualCamera { get => _virtualCamera; set => _virtualCamera = value; }
         public IWorldInput WorldInput { get => _worldInput; set => _worldInput = value; }
         public IPuzzleInput PuzzleInput { get => _puzzleInput; set => _puzzleInput = value; }
         public PuzzlesWins PuzzleWins { get => _puzzlesWins; set => _puzzlesWins = value; }
-        public bool IsWinned { get => _isWinned; set => _isWinned = value; }
         public Camera MainCamera { get => _mainCamera; set => _mainCamera = value; }
         public GameObject GrabbedCircle { get => _grabbedCircle; set => _grabbedCircle = value; }
         public GameObject[] Circles => _circles;

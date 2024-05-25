@@ -22,20 +22,14 @@ namespace App.Player.Private
                 _isEnable = value;
 
                 if (value)
-                {
                     _data.AppInput.OnMoving.AddListener(OnMoving);
-                }
                 else
-                {
                     _data.AppInput.OnMoving.RemoveListener(OnMoving);
-                }
             }
         }
 
-        public WalkHandler(Data data)
-        {
-            _data = data;
-        }
+        public WalkHandler(Data data) 
+            => _data = data;
 
 
         private void OnMoving(bool obj)
@@ -71,6 +65,7 @@ namespace App.Player.Private
 
                 await UniTask.NextFrame();
             }
+
             _data.HorizontalVelocity = Vector3.zero;
             _alreadyMoving = false;
         }
