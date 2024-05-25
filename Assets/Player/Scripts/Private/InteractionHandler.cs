@@ -54,8 +54,6 @@ namespace App.Player.Private
 
             _canInteract = CheckForInteractableObject(out InteractionObject interactionObject);
 
-            Debug.Log(_canInteract);
-
             if (_canInteract)
                 _data.AimHighlighter.Highlight();
             else

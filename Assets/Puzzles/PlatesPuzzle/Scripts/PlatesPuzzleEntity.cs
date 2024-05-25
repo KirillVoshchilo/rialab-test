@@ -1,13 +1,13 @@
+using App.AppInputSystem;
+using App.Puzzles.PlatesPuzzle.Private;
+using App.SimplesScipts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
-using App.Puzzles.ClockPuzzle.Private;
-using Cysharp.Threading.Tasks;
-using App.SimplesScipts;
-using App.AppInputSystem;
 
-namespace App.Puzzles.ClockPuzzle
+namespace App.Puzzles.PlatesPuzzle
 {
-    public class ClockPuzzleEntity : MonoBehaviour, IEntity
+    public class PlatesPuzzleEntity : MonoBehaviour, IEntity
     {
         [SerializeField] private Data _data;
 
@@ -24,10 +24,7 @@ namespace App.Puzzles.ClockPuzzle
             _data.PuzzleWins = puzzlesWins;
             _data.MainCamera = Camera.main;
 
-            _data.Hours = Random.Range(0, 24);
-            _data.Minutes = Random.Range(0, 60);
-
-            _data.TimerField.text = $"{_data.Hours}:{_data.Minutes}";
+            CreateNewValues();
         }
         public T Get<T>() where T : class
         {
@@ -45,47 +42,48 @@ namespace App.Puzzles.ClockPuzzle
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
+            _data.Shutdown—ollider.enabled = false;
+
             _isEnable = true;
             _data.VirtualCamera.Priority = 20;
             _data.PuzzleInput.IsEnable = true;
             _data.WorldInput.IsEnable = false;
             _data.PuzzleInput.OnClicked.AddListener(TryGrab);
         }
+        [ContextMenu("Reset")]
+        private void CreateNewValues()
+        {
+            int count = _data.Circles.Length;
+
+            for (int i = 0; i < count; i++)
+            {
+                int randomAngle = Random.Range(0, 360);
+                Quaternion rotation = Quaternion.AngleAxis(randomAngle, _data.Circles[i].transform.up);
+                Vector3 vector = _data.Circles[i].transform.forward;
+                vector = rotation * vector;
+
+                _data.Circles[i].transform.rotation = Quaternion.LookRotation(vector, _data.Circles[i].transform.up);
+            }
+            if (_data.IsWinned)
+            {
+                _data.IsWinned = false;
+                _data.PuzzleWins.WinsCount -= 1;
+            }
+        }
         private bool CheckForWin()
         {
-            Vector3 minDirection = _data.LongArrow.transform.parent.forward;
-            Vector3 hourDirection = _data.ShortArrow.transform.parent.forward;
+            int count = _data.Circles.Length;
+            int result = 0;
 
-            float minAngle = Vector3.Angle(minDirection, Vector3.up);
-            float hoursAngle = Vector3.Angle(hourDirection, Vector3.up);
+            for (int i = 0; i < count; i++)
+            {
+                float angle = Vector3.Angle(_data.Circles[i].transform.forward, Vector3.up);
 
-            float minutesPart = Mathf.Sign(Vector3.Dot(minDirection, _data.RotationCenter.forward));
-            float hoursPart = Mathf.Sign(Vector3.Dot(hourDirection, _data.RotationCenter.forward));
+                if (Mathf.Abs(angle) <= 3)
+                    result++;
+            }
 
-            float h, m;
-
-            if (hoursPart >= 0)
-                h = 6 * hoursAngle / 180;
-            else
-                h = 6 + (6 * (180 - hoursAngle) / 180);
-
-            if (minutesPart >= 0)
-                m = 30 * minAngle / 180;
-            else
-                m = 30 + (30 * (180 - minAngle) / 180);
-
-            bool hGood = false;
-            bool mGood = false;
-
-            if (Mathf.Abs(_data.Hours - h) <= 0.5 || Mathf.Abs(_data.Hours - h - 12) <= 0.5)
-                hGood = true;
-
-            if (Mathf.Abs(_data.Minutes - m) <= 2)
-                mGood = true;
-
-            Debug.Log($"min {mGood} h {hGood}");
-
-            return mGood && hGood;
+            return result == count;
         }
         private void TryGrab(bool obj)
         {
@@ -97,27 +95,27 @@ namespace App.Puzzles.ClockPuzzle
 
             if (Physics.Raycast(ray, out RaycastHit raycastHitInfo))
             {
-                if (_data.ShortArrow == raycastHitInfo.collider.gameObject)
-                {
-                    _data.GrabbedArrow = _data.ShortArrow;
-                }
+                int count = _data.Circles.Length;
 
-                else if (_data.LongArrow == raycastHitInfo.collider.gameObject)
+                for (int i = 0; i < count; i++)
                 {
-                    _data.GrabbedArrow = _data.LongArrow;
+                    if (_data.Circles[i] == raycastHitInfo.collider.gameObject)
+                    {
+                        _data.GrabbedCircle = _data.Circles[i];
+                        break;
+                    }
                 }
             }
 
-
-            if (_data.GrabbedArrow != null)
+            if (_data.GrabbedCircle != null)
             {
-                MovingArrowProcess()
+                MovingCircleProcess()
                     .Forget();
             }
         }
-        private async UniTask MovingArrowProcess()
+        private async UniTask MovingCircleProcess()
         {
-            Transform rotationObject = _data.GrabbedArrow.transform.parent.transform;
+            Transform rotationObject = _data.GrabbedCircle.transform;
             Vector2 screenRotationCenter = _data.MainCamera.WorldToScreenPoint(rotationObject.position);
 
             while (_isEnable && _data.PuzzleInput.IsPressed)
@@ -136,7 +134,7 @@ namespace App.Puzzles.ClockPuzzle
 
                 await UniTask.NextFrame();
             }
-            _data.GrabbedArrow = null;
+            _data.GrabbedCircle = null;
         }
         private void FinishPuzzle()
         {
@@ -144,6 +142,8 @@ namespace App.Puzzles.ClockPuzzle
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            _data.Shutdown—ollider.enabled = true;
 
             _data.VirtualCamera.Priority = 5;
             _data.PuzzleInput.IsEnable = false;
