@@ -26,12 +26,16 @@ namespace App.AppInputSystem
 
                 if (value)
                     _interactions.Puzzle.Enable();
-                else _interactions.Puzzle.Disable();
+                else
+                {
+                    _isPressed = false;
+                    _interactions.Puzzle.Disable();
+                }
             }
         }
 
         public bool IsPressed => _isPressed;
-        public SEvent<bool> OnClicked => _onClicked;
+        public ISEvent<bool> OnClicked => _onClicked;
         public Vector2 PointerPosition => _pointerPosition;
 
         public PuzzleInput()
@@ -77,7 +81,7 @@ namespace App.AppInputSystem
     public interface IPuzzleInput
     {
         bool IsPressed { get; }
-        SEvent<bool> OnClicked { get; }
+        ISEvent<bool> OnClicked { get; }
         Vector2 PointerPosition { get; }
         bool IsEnable { get; set; }
     }

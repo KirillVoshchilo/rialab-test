@@ -51,7 +51,7 @@ namespace App.Player.Private
             }
             else
             {
-                _data.AimHighlighter.TurnOffHighlight();
+                _data.AimHighlighter.SetActive(false);
                 _data.Aim.gameObject.SetActive(false);
             }
         }

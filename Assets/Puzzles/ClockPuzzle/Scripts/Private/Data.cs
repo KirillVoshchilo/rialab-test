@@ -14,9 +14,14 @@ namespace App.Puzzles.ClockPuzzle.Private
         [SerializeField] private TextMeshProUGUI _timerField;
         [SerializeField] private CinemachineVirtualCamera _virtualCamera;
         [SerializeField] private Transform _rotationCenter;
+        [SerializeField] private Color _arrowHighlighter;
 
         private int _hours;
         private int _minutes;
+        private Color _shortArrowDefaultColor;
+        private Color _longArrowDefaultColor;
+        private Material _shortArrowMaterial;
+        private Material _longArrowMaterial;
 
         private InteractionObject _interactionObject;
         private GameObject _grabbedArrow;
@@ -41,5 +46,28 @@ namespace App.Puzzles.ClockPuzzle.Private
         public Transform RotationCenter => _rotationCenter;
         public int Hours { get => _hours; set => _hours = value; }
         public int Minutes { get => _minutes; set => _minutes = value; }
+        public Color ArrowHighlighter { get => _arrowHighlighter; set => _arrowHighlighter = value; }
+        public Color ShortArrowDefaultColor { get => _shortArrowDefaultColor; set => _shortArrowDefaultColor = value; }
+        public Color LongArrowDefaultColor { get => _longArrowDefaultColor; set => _longArrowDefaultColor = value; }
+        public Material ShortArrowMaterial
+        {
+            get
+            {
+                if (_shortArrowMaterial == null)
+                    _shortArrowMaterial = _shortArrow.GetComponent<Renderer>().material;
+            
+                return _shortArrowMaterial;
+            }
+        }
+        public Material LongArrowMaterial
+        {
+            get 
+            {
+                if (_longArrowMaterial == null)
+                    _longArrowMaterial = _longArrow.GetComponent<Renderer>().material;
+
+                return _longArrowMaterial;
+            }
+        }
     }
 }

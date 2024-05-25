@@ -1,6 +1,7 @@
 using App.AppInputSystem;
 using App.Puzzles.PasswordPuzzle.Private;
 using App.SimplesScipts;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
@@ -20,9 +21,7 @@ namespace App.Puzzles.PasswordPuzzle
             _data.PuzzleInput = puzzleInput;
             _data.PuzzleWins = puzzlesWins;
 
-            int password = Random.Range(0, 9999);
-            _data.Password = password.ToString(_data.PasswordForm);
-            _data.PasswordField.text = _data.Password;
+            ResetValues();
         }
         public T Get<T>() where T : class
         {
@@ -31,6 +30,24 @@ namespace App.Puzzles.PasswordPuzzle
 
             return null;
         }
+        [Button("Reset", ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
+        public void ResetValues()
+        {
+            if (_data.PuzzleWins == null)
+                return;
+
+            int password = Random.Range(0, 9999);
+            _data.Password = password.ToString(_data.PasswordForm);
+            _data.PasswordField.text = _data.Password;
+            _data.PasswordInputField.text = "";
+
+            if (_data.IsWinned)
+            {
+                _data.IsWinned = false;
+                _data.PuzzleWins.WinsCount -= 1;
+            }
+        }
+
 
         private void InteractiWithPuzzle()
         {
@@ -75,10 +92,11 @@ namespace App.Puzzles.PasswordPuzzle
             _data.PuzzleWins.WinsCount += 1;
             FinishPuzzle();
         }
+        [Button("FinishPuzzle", ButtonSizes.Large), GUIColor(0.8f, 0.3f, 0.3f)]
         private void FinishPuzzle()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if (_data.PuzzleInput == null)
+                return;
 
             _data.VirtualCamera.Priority = 5;
             _data.PuzzleInput.IsEnable = false;
@@ -89,10 +107,12 @@ namespace App.Puzzles.PasswordPuzzle
             _data.ResetButtonEvent.RemoveListener(OnResetButtonClicked);
 
             int count = _data.NumberButtons.Length;
+          
             for (int i = 0; i < count; i++)
-            {
                 _data.NumberButtons[i].OnClicked.RemoveListener(OnButtonClicked);
-            }
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

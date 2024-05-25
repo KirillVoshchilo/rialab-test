@@ -4,10 +4,11 @@ using App.Puzzles.ClockPuzzle.Private;
 using Cysharp.Threading.Tasks;
 using App.SimplesScipts;
 using App.AppInputSystem;
+using Sirenix.OdinInspector;
 
 namespace App.Puzzles.ClockPuzzle
 {
-    public class ClockPuzzleEntity : MonoBehaviour, IEntity
+    public sealed class ClockPuzzleEntity : MonoBehaviour, IEntity
     {
         [SerializeField] private Data _data;
 
@@ -24,10 +25,10 @@ namespace App.Puzzles.ClockPuzzle
             _data.PuzzleWins = puzzlesWins;
             _data.MainCamera = Camera.main;
 
-            _data.Hours = Random.Range(0, 24);
-            _data.Minutes = Random.Range(0, 60);
+            _data.LongArrowDefaultColor = _data.LongArrowMaterial.color;
+            _data.ShortArrowDefaultColor = _data.ShortArrowMaterial.color;
 
-            _data.TimerField.text = $"{_data.Hours}:{_data.Minutes}";
+            ResetValues();
         }
         public T Get<T>() where T : class
         {
@@ -49,9 +50,27 @@ namespace App.Puzzles.ClockPuzzle
             _data.VirtualCamera.Priority = 20;
             _data.PuzzleInput.IsEnable = true;
             _data.WorldInput.IsEnable = false;
+
             _data.PuzzleInput.OnClicked.AddListener(TryGrab);
         }
-        private bool CheckForWin()
+        [Button("Reset", ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
+        private void ResetValues()
+        {
+            if (_data.PuzzleWins == null)
+                return;
+
+            _data.Hours = Random.Range(0, 24);
+            _data.Minutes = Random.Range(0, 60);
+
+            _data.TimerField.text = $"{_data.Hours}:{_data.Minutes}";
+
+            if (_data.IsWinned)
+            {
+                _data.IsWinned = false;
+                _data.PuzzleWins.WinsCount -= 1;
+            }
+        }
+        private bool CheckForWin(out bool isMinutesCorrect, out bool isHoursCorrect)
         {
             Vector3 minDirection = _data.LongArrow.transform.parent.forward;
             Vector3 hourDirection = _data.ShortArrow.transform.parent.forward;
@@ -74,19 +93,18 @@ namespace App.Puzzles.ClockPuzzle
             else
                 m = 30 + (30 * (180 - minAngle) / 180);
 
-            bool hGood = false;
-            bool mGood = false;
+            isMinutesCorrect = false;
+            isHoursCorrect = false;
 
-            if (Mathf.Abs(_data.Hours - h) <= 0.5 || Mathf.Abs(_data.Hours - h - 12) <= 0.5)
-                hGood = true;
+            if (Mathf.Abs(_data.Hours - h) <= 0.3 || Mathf.Abs(_data.Hours - h - 12) <= 0.3)
+                isHoursCorrect = true;
 
-            if (Mathf.Abs(_data.Minutes - m) <= 2)
-                mGood = true;
+            if (Mathf.Abs(_data.Minutes - m) <= 1)
+                isMinutesCorrect = true;
 
-            Debug.Log($"min {mGood} h {hGood}");
-
-            return mGood && hGood;
+            return isMinutesCorrect && isHoursCorrect;
         }
+
         private void TryGrab(bool obj)
         {
             if (!obj)
@@ -127,7 +145,19 @@ namespace App.Puzzles.ClockPuzzle
                 Vector3 direction = new(0, screenDirection.y, screenDirection.x);
                 rotationObject.rotation = Quaternion.LookRotation(direction, rotationObject.up);
 
-                if (CheckForWin())
+                bool isWin = CheckForWin(out bool isMinutesCorrect, out bool isHoursCorrect);
+
+                if (isMinutesCorrect)
+                    _data.LongArrowMaterial.color = _data.ArrowHighlighter;
+                else
+                    _data.LongArrowMaterial.color = _data.LongArrowDefaultColor;
+
+                if (isHoursCorrect)
+                    _data.ShortArrowMaterial.color = _data.ArrowHighlighter;
+                else
+                    _data.ShortArrowMaterial.color = _data.ShortArrowDefaultColor;
+
+                if (isWin)
                 {
                     _data.IsWinned = true;
                     _data.PuzzleWins.WinsCount += 1;
@@ -138,17 +168,21 @@ namespace App.Puzzles.ClockPuzzle
             }
             _data.GrabbedArrow = null;
         }
+        [Button("FinishPuzzle", ButtonSizes.Large), GUIColor(0.8f, 0.3f, 0.3f)]
         private void FinishPuzzle()
         {
-            _isEnable = false;
+            if (_data.PuzzleInput == null)
+                return;
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            _isEnable = false;
 
             _data.VirtualCamera.Priority = 5;
             _data.PuzzleInput.IsEnable = false;
             _data.WorldInput.IsEnable = true;
             _data.IsWinned = true;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

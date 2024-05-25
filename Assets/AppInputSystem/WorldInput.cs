@@ -17,9 +17,9 @@ namespace App.AppInputSystem
         private bool _isLooking;
         private bool _isEnable;
 
-        public SEvent<bool> OnMoving => _onMoving;
-        public SEvent OnJumpPressed => _onJumpPressed;
-        public SEvent<bool> OnLooking => _onLooking;
+        public ISEvent<bool> OnMoving => _onMoving;
+        public ISEvent OnJumpPressed => _onJumpPressed;
+        public ISEvent<bool> OnLooking => _onLooking;
         public Vector2 MoveDirection => _moveDirection;
         public Vector2 LookDirection => _lookDirection;
         public bool IsMoving => _isMoving;
@@ -39,7 +39,7 @@ namespace App.AppInputSystem
                 else _interactions.World.Disable();
             }
         }
-        public SEvent OnInteractionPressed => _onInteractionPressed;
+        public ISEvent OnInteractionPressed => _onInteractionPressed;
 
         public WorldInput()
         {
@@ -108,9 +108,9 @@ namespace App.AppInputSystem
         bool IsMoving { get; }
         bool IsLooking { get; }
         bool IsEnable { get; set; }
-        SEvent<bool> OnMoving { get; }
-        SEvent OnJumpPressed { get; }
-        SEvent<bool> OnLooking { get; }
-        SEvent OnInteractionPressed { get; }
+        ISEvent<bool> OnMoving { get; }
+        ISEvent OnJumpPressed { get; }
+        ISEvent<bool> OnLooking { get; }
+        ISEvent OnInteractionPressed { get; }
     }
 }

@@ -38,9 +38,8 @@ namespace App.Player.Private
 
 
         public InteractionHandler(Data data)
-        {
-            _data = data;
-        }
+            => _data = data;
+
         private void OnInteractionPressed()
         {
             if (_canInteract)
@@ -55,9 +54,9 @@ namespace App.Player.Private
             _canInteract = CheckForInteractableObject(out InteractionObject interactionObject);
 
             if (_canInteract)
-                _data.AimHighlighter.Highlight();
+                _data.AimHighlighter.SetActive(true);
             else
-                _data.AimHighlighter.TurnOffHighlight();
+                _data.AimHighlighter.SetActive(false);
 
             _interactionObject = interactionObject;
         }
@@ -71,9 +70,7 @@ namespace App.Player.Private
             if (!Physics.Raycast(ray, out RaycastHit hit, 2))
                 return false;
 
-            IEntity entity = hit.collider.gameObject.GetComponent<IEntity>();
-
-            if (entity == null)
+            if (!hit.collider.gameObject.TryGetComponent(out IEntity entity))
                 return false;
 
             interactionObject = entity.Get<InteractionObject>();

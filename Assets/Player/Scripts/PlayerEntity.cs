@@ -1,13 +1,12 @@
 ﻿using App.AppInputSystem;
 using App.CyclesSystem;
 using App.Player.Private;
-using App.SimplesScipts;
 using UnityEngine;
 using VContainer;
 
 namespace App.Player
 {
-    public sealed class PlayerEntity : MonoBehaviour, IEntity
+    public sealed class PlayerEntity : MonoBehaviour
     {
         [SerializeField] private Data _data;
 
@@ -55,14 +54,6 @@ namespace App.Player
 
             _data.VerticalAngle = 0.0f;
             _data.HorizontalAngle = transform.localEulerAngles.y;
-        }
-
-        public T Get<T>() where T : class
-        {
-            if (typeof(T) == typeof(Flags))
-                return _data.Flags as T;
-
-            return null;
         }
     }
 }

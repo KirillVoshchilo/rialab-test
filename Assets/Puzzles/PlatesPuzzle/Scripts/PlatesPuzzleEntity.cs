@@ -2,6 +2,7 @@ using App.AppInputSystem;
 using App.Puzzles.PlatesPuzzle.Private;
 using App.SimplesScipts;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
@@ -24,7 +25,7 @@ namespace App.Puzzles.PlatesPuzzle
             _data.PuzzleWins = puzzlesWins;
             _data.MainCamera = Camera.main;
 
-            CreateNewValues();
+            ResetValues();
         }
         public T Get<T>() where T : class
         {
@@ -48,11 +49,15 @@ namespace App.Puzzles.PlatesPuzzle
             _data.VirtualCamera.Priority = 20;
             _data.PuzzleInput.IsEnable = true;
             _data.WorldInput.IsEnable = false;
+
             _data.PuzzleInput.OnClicked.AddListener(TryGrab);
         }
-        [ContextMenu("Reset")]
-        private void CreateNewValues()
+        [Button("Reset", ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
+        private void ResetValues()
         {
+            if (_data.PuzzleWins == null)
+                return;
+
             int count = _data.Circles.Length;
 
             for (int i = 0; i < count; i++)
@@ -136,12 +141,13 @@ namespace App.Puzzles.PlatesPuzzle
             }
             _data.GrabbedCircle = null;
         }
+        [Button("FinishPuzzle", ButtonSizes.Large), GUIColor(0.8f, 0.3f, 0.3f)]
         private void FinishPuzzle()
         {
-            _isEnable = false;
+            if (_data.PuzzleInput == null)
+                return;
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            _isEnable = false;
 
             _data.ShutdownÑollider.enabled = true;
 
@@ -149,6 +155,9 @@ namespace App.Puzzles.PlatesPuzzle
             _data.PuzzleInput.IsEnable = false;
             _data.WorldInput.IsEnable = true;
             _data.IsWinned = true;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

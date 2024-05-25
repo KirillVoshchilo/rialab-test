@@ -1,8 +1,5 @@
 ﻿using App.AppInputSystem;
-using App.Components;
 using App.CyclesSystem;
-using App.Puzzles;
-using App.SimplesScipts;
 using Cinemachine;
 using System;
 using UnityEngine;
@@ -14,9 +11,8 @@ namespace App.Player.Private
     {
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
-        [SerializeField] private Flags _flags;
         [SerializeField] private RectTransform _aim;
-        [SerializeField] private SCUIHighlighter _aimHighlighter;
+        [SerializeField] private GameObject _aimHighlighter;
 
         [Header("Control Settings")]
         [SerializeField] private float _mouseHorizontalSensitivity = 100.0f;
@@ -51,10 +47,9 @@ namespace App.Player.Private
         public PlayerEntity PlayerEntity { get => _playerEntity; set => _playerEntity = value; }
         public IWorldInput AppInput { get => _appInput; set => _appInput = value; }
         public float MouseHorizontalSensitivity => _mouseHorizontalSensitivity;
-        public Flags Flags => _flags;
 
         public RectTransform Aim => _aim;
-        public SCUIHighlighter AimHighlighter => _aimHighlighter;
+        public GameObject AimHighlighter => _aimHighlighter;
 
         public Camera MainCamera { get => _mainCamera; set => _mainCamera = value; }
     }

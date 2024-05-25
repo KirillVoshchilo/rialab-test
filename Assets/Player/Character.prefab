@@ -24,7 +24,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681192540039641271}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,6 +31,7 @@ Transform:
   m_Children:
   - {fileID: 2237348322787975766}
   m_Father: {fileID: 5021440502688159560}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6537454497418841882
 MonoBehaviour:
@@ -62,7 +62,6 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    FocusDistance: 10
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
@@ -98,13 +97,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730863782399558972}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8206294757707381583}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2322517889934403241
 MonoBehaviour:
@@ -194,7 +193,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3279643421313206015}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: 0, w: -0.0000001872535}
   m_LocalPosition: {x: 0, y: 1.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -203,6 +201,7 @@ Transform:
   - {fileID: 8206294757707381583}
   - {fileID: 1714872459798801169}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
 --- !u!33 &9177542012026857791
 MeshFilter:
@@ -269,10 +268,8 @@ MonoBehaviour:
   _data:
     _characterController: {fileID: 3646216290941353021}
     _cinemachineCamera: {fileID: 6537454497418841882}
-    _flags:
-      _flags: 00000000
     _aim: {fileID: 6982480028323556704}
-    _aimHighlighter: {fileID: 6123665115267035538}
+    _aimHighlighter: {fileID: 6778973803737898170}
     _mouseHorizontalSensitivity: 1
     _mouseVerticalSensitivity: 1
     _playerSpeed: 5
@@ -285,17 +282,9 @@ CharacterController:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3279643421313206015}
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Height: 1.75
   m_Radius: 0.5
   m_SlopeLimit: 45
@@ -337,6 +326,7 @@ RectTransform:
   - {fileID: 8575576999371563312}
   - {fileID: 6982480028323556704}
   m_Father: {fileID: 5021440502688159560}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -360,9 +350,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -437,6 +425,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1714872459798801169}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -492,7 +481,6 @@ GameObject:
   - component: {fileID: 6982480028323556704}
   - component: {fileID: 8313930984114957116}
   - component: {fileID: 431707549775987016}
-  - component: {fileID: 6123665115267035538}
   m_Layer: 12
   m_Name: Aim
   m_TagString: Untagged
@@ -513,6 +501,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1714872459798801169}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -557,21 +546,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6123665115267035538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9045661977858703815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75bf17d9e91eabb498af376cb6d205cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _diactivatedObjects: []
-  _activatedObjects:
-  - {fileID: 6778973803737898170}
-  _changedColorImages: []
-  _changedTMPColors: []
-  _changedScaleImages: []

@@ -27,7 +27,7 @@ namespace App.SceneLoaderSystem
 
             await SceneManager.LoadSceneAsync(sceneID, LoadSceneMode.Single);
             _currentLoadedLevel = sceneID;
-            _sceneScope = GameObject.FindAnyObjectByType<Scope>();
+            _sceneScope = GameObject.FindObjectOfType<Scope>();
             LifetimeScope lifetimeScope = _rootScope.CreateChild(_sceneScope.Build);
             _sceneScope.SceneScope = lifetimeScope;
             _sceneScope.Resolve(lifetimeScope.Container);
@@ -36,7 +36,7 @@ namespace App.SceneLoaderSystem
         private void UnloadPreviousScope()
         {
             if (_sceneScope == null)
-                _sceneScope = GameObject.FindAnyObjectByType<Scope>();
+                _sceneScope = GameObject.FindObjectOfType<Scope>();
 
             if (_sceneScope == null)
                 return;
