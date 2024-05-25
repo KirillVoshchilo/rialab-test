@@ -99,7 +99,7 @@ namespace App.Puzzles.ClockPuzzle
             if (Mathf.Abs(_data.Hours - h) <= 0.3 || Mathf.Abs(_data.Hours - h - 12) <= 0.3)
                 isHoursCorrect = true;
 
-            if (Mathf.Abs(_data.Minutes - m) <= 1)
+            if (Mathf.Abs(_data.Minutes - m) <= 0.5)
                 isMinutesCorrect = true;
 
             return isMinutesCorrect && isHoursCorrect;
