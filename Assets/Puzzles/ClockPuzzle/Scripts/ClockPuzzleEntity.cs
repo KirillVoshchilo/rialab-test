@@ -59,6 +59,9 @@ namespace App.Puzzles.ClockPuzzle
             if (_data.PuzzleWins == null)
                 return;
 
+            _data.LongArrowMaterial.color = _data.LongArrowDefaultColor;
+            _data.ShortArrowMaterial.color = _data.ShortArrowDefaultColor;
+
             _data.Hours = Random.Range(0, 24);
             _data.Minutes = Random.Range(0, 60);
 

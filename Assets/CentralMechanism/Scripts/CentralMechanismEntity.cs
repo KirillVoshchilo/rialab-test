@@ -15,7 +15,7 @@ namespace App.CentralMechanism
         {
             _data.PuzzleWins = puzzlesWins;
             _data.IsDetailActive = new bool[_data.Details.Length];
-
+            _data.DefaultScale = _data.Details[2].transform.localScale;
             puzzlesWins.OnWinsCountChanged.AddListener(OnWinsCountChanged);
         }
 
@@ -114,6 +114,8 @@ namespace App.CentralMechanism
             Transform tr = _data.Details[2].transform;
 
             tr.DOKill();
+
+            tr.localScale = _data.DefaultScale;
         }
     }
 }
