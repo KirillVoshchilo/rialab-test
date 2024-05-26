@@ -1,6 +1,8 @@
 using App.AppInputSystem;
 using App.Puzzles.PasswordPuzzle.Private;
 using App.SimplesScipts;
+using Cinemachine;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
@@ -20,6 +22,7 @@ namespace App.Puzzles.PasswordPuzzle
             _data.WorldInput = worldInput;
             _data.PuzzleInput = puzzleInput;
             _data.PuzzleWins = puzzlesWins;
+            _data.CinemachineBrain = Camera.main.transform.GetComponent<CinemachineBrain>();
 
             ResetValues();
         }
@@ -30,7 +33,7 @@ namespace App.Puzzles.PasswordPuzzle
 
             return null;
         }
-       
+
         [Button("Reset", ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
         private void ResetValues()
         {
@@ -88,30 +91,34 @@ namespace App.Puzzles.PasswordPuzzle
             if (_data.PasswordInputField.text != _data.Password)
                 return;
 
+            _data.IsWinned = true;
             _data.PuzzleWins.WinsCount += 1;
             FinishPuzzle();
         }
         [Button("FinishPuzzle", ButtonSizes.Large), GUIColor(0.8f, 0.3f, 0.3f)]
-        private void FinishPuzzle()
+        private async void FinishPuzzle()
         {
             if (_data.PuzzleInput == null)
                 return;
 
             _data.VirtualCamera.Priority = 5;
             _data.PuzzleInput.IsEnable = false;
-            _data.WorldInput.IsEnable = true;
-            _data.IsWinned = true;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 
             _data.EnterButtonEvent.RemoveListener(OnEnterButtonClicked);
             _data.ResetButtonEvent.RemoveListener(OnResetButtonClicked);
 
             int count = _data.NumberButtons.Length;
-          
+
             for (int i = 0; i < count; i++)
                 _data.NumberButtons[i].OnClicked.RemoveListener(OnButtonClicked);
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+
+            await UniTask.WaitUntil(() => _data.CinemachineBrain.IsBlending == false);
+
+            _data.WorldInput.IsEnable = true;
         }
     }
 }

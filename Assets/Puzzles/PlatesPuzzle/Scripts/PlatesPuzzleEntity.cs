@@ -1,6 +1,7 @@
 using App.AppInputSystem;
 using App.Puzzles.PlatesPuzzle.Private;
 using App.SimplesScipts;
+using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace App.Puzzles.PlatesPuzzle
             _data.PuzzleInput = puzzleInput;
             _data.PuzzleWins = puzzlesWins;
             _data.MainCamera = Camera.main;
+            _data.CinemachineBrain = _data.MainCamera.transform.GetComponent<CinemachineBrain>();
 
             ResetValues();
         }
@@ -142,7 +144,7 @@ namespace App.Puzzles.PlatesPuzzle
             _data.GrabbedCircle = null;
         }
         [Button("FinishPuzzle", ButtonSizes.Large), GUIColor(0.8f, 0.3f, 0.3f)]
-        private void FinishPuzzle()
+        private async void FinishPuzzle()
         {
             if (_data.PuzzleInput == null)
                 return;
@@ -153,11 +155,14 @@ namespace App.Puzzles.PlatesPuzzle
 
             _data.VirtualCamera.Priority = 5;
             _data.PuzzleInput.IsEnable = false;
-            _data.WorldInput.IsEnable = true;
             _data.IsWinned = true;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            await UniTask.WaitUntil(() => _data.CinemachineBrain.IsBlending == false);
+
+            _data.WorldInput.IsEnable = true;
         }
     }
 }
