@@ -26,6 +26,7 @@ namespace App.Puzzles.PasswordPuzzle.Private
         private IWorldInput _worldInput;
         private PuzzlesWins _puzzlesWins;
         private IPuzzleInput _puzzleInput;
+        private CinemachineBrain _cinemachineBrain;
         private bool _isWinned;
         private string _passwordForm = "####";
 
@@ -44,5 +45,6 @@ namespace App.Puzzles.PasswordPuzzle.Private
         public TextMeshProUGUI PasswordField { get => _passwordField; set => _passwordField = value; }
         public TextMeshProUGUI PasswordInputField { get => _passwordInputField; set => _passwordInputField = value; }
         public NumberButton[] NumberButtons { get => _numberButtons; set => _numberButtons = value; }
+        public CinemachineBrain CinemachineBrain { get => _cinemachineBrain; set => _cinemachineBrain = value; }
     }
 }
