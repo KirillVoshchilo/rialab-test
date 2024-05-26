@@ -15,7 +15,11 @@ namespace App.CentralMechanism
         {
             _data.PuzzleWins = puzzlesWins;
             _data.IsDetailActive = new bool[_data.Details.Length];
+
             _data.DefaultScale = _data.Details[2].transform.localScale;
+            _data.DefaultPosition = _data.Details[1].transform.position;
+            _data.DefaultRotation = _data.Details[0].transform.rotation;
+
             puzzlesWins.OnWinsCountChanged.AddListener(OnWinsCountChanged);
         }
 
@@ -59,6 +63,8 @@ namespace App.CentralMechanism
             Transform tr = _data.Details[0].transform;
 
             tr.DOKill();
+
+            tr.rotation = _data.DefaultRotation;
         }
         private void Move_2()
         {
@@ -90,6 +96,8 @@ namespace App.CentralMechanism
             Transform tr = _data.Details[1].transform;
 
             tr.DOKill();
+
+            tr.position = _data.DefaultPosition;
         }
         private void Move_3()
         {
